@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useSearchParams } from "react-router-dom";
+import PhotoCard from "../components/PhotoCard";
 import { fetchImages } from "../utils/apiRequest";
-import PhotoCard from "./PhotoCard";
 
 const Photos = () => {
   const [order, setOrder] = useState("latest");

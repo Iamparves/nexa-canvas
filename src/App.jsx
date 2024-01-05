@@ -4,12 +4,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
 import OnlineRoutes from "./components/OnlineRoutes";
+import PhotoDetails from "./components/PhotoDetails";
 import Downloads from "./pages/Downloads";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Offline from "./pages/Offline";
-import PhotoDetails from "./pages/PhotoDetails";
 import Photos from "./pages/Photos";
+import Videos from "./pages/Videos";
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
             </Route>
             <Route path="photos" element={<Photos />} />
             <Route path="photos/:photoId" element={<PhotoDetails />} />
+            <Route path="videos" element={<Videos />} />
+            <Route path="videos/:videoId" element={<PhotoDetails />} />
             <Route path="downloads" element={<Downloads />} />
             <Route path="offline" element={<Offline />} />
             <Route path="*" element={<NotFound />} />

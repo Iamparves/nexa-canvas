@@ -26,15 +26,13 @@ const PhotoDetails = () => {
                 <div className="flex items-center justify-between pb-4">
                   <Link
                     to={`/photos?user_id=${photo.user_id}`}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 text-gray-700 duration-300 hover:text-indigo-500"
                   >
                     <img
                       className="h-10 w-10 rounded-full"
                       src={photo.userImageURL}
                     />
-                    <p className="text-sm font-medium text-gray-700">
-                      {photo.user}
-                    </p>
+                    <p className="text-sm font-medium">{photo.user}</p>
                   </Link>
                   <button className="flex items-center gap-2 rounded-full border-2 border-indigo-500 bg-indigo-500 px-4 py-2 text-sm font-medium uppercase text-white duration-300 hover:bg-white hover:text-indigo-500">
                     <MdOutlineSaveAlt className="text-lg" /> Save
@@ -52,7 +50,7 @@ const PhotoDetails = () => {
                       <Link
                         key={tag}
                         to={`/photos?s=${tag}`}
-                        className="rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-500"
+                        className="rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-500 duration-300 hover:bg-indigo-500 hover:text-white"
                       >
                         {tag}
                       </Link>
