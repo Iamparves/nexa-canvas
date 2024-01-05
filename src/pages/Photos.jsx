@@ -1,15 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { fetchImages } from "../utils/apiRequest";
+import PhotoCard from "./PhotoCard";
 
 const Photos = () => {
+  const [order, setOrder] = useState("latest");
   const [searchParams, setSearchParams] = useSearchParams();
-  const search = searchParams.get("s") || "";
 
-  const queryString = "&per_page=24&min_width=300&order=latest";
-  if (!!search) q.concat(`&q=${search}`);
+  const search = searchParams.get("s") || "";
+  const user_id = searchParams.get("user_id") || "";
+
+  let queryString = `&per_page=24&min_width=300&order=${order}`;
+  if (!!search) queryString += `&q=${search}`;
+  if (!!user_id) queryString += `&user_id=${user_id}`;
 
   const query = useQuery({
     queryKey: ["photos", search],
@@ -29,29 +34,16 @@ const Photos = () => {
             columnsCountBreakPoints={{ 300: 1, 500: 2, 768: 3 }}
           >
             <Masonry gutter="20px">
-              {query.data?.map((row) => (
-                <Link
-                  to={`/photos/${row.id}`}
-                  className="group relative bg-white"
-                  key={row.id}
-                >
-                  <img
-                    className="block w-full object-cover"
-                    src={row.webformatURL}
-                    alt=""
-                  />
-                  <div className="absolute left-0 top-0 flex h-full w-full flex-col justify-end bg-[linear-gradient(#0000_30%,#000000aa)] duration-300 group-hover:visible group-hover:opacity-100 md:invisible md:opacity-0">
-                    <div className="flex flex-wrap items-center justify-between gap-x-5 p-3 text-white sm:p-5">
-                      <p>
-                        <span className="text-gray-200">by</span> {row.user}
-                      </p>
-                      <p className="text-sm">{row.views} views</p>
-                    </div>
-                  </div>
-                </Link>
+              {query.data?.map((photo) => (
+                <PhotoCard photo={photo} key={photo.id} />
               ))}
             </Masonry>
           </ResponsiveMasonry>
+        )}
+        {!query.isLoading && !query.isError && query.data?.length === 0 && (
+          <div className="rounded-md border py-20 text-center text-lg text-gray-500">
+            No photos found
+          </div>
         )}
       </div>
     </main>
