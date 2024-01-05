@@ -13,7 +13,7 @@ const NotFound = () => {
             Page not found
           </p>
           <Link
-            className="inline-block rounded-full border-2 border-indigo-500 bg-indigo-500 px-5 py-2 text-white duration-300 hover:bg-white hover:text-indigo-500 sm:px-7 sm:py-3 sm:text-lg"
+            className="inline-block rounded-full border-2 border-indigo-500 bg-indigo-500 px-4 py-2 text-white duration-300 hover:bg-white hover:text-indigo-500 sm:px-7 sm:py-3 sm:text-lg"
             to="/"
           >
             Go to Home

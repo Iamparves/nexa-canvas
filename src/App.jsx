@@ -8,6 +8,7 @@ import Downloads from "./pages/Downloads";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Offline from "./pages/Offline";
+import PhotoDetails from "./pages/PhotoDetails";
 import Photos from "./pages/Photos";
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
               <Route path="" index element={<Home />} />
             </Route>
             <Route path="photos" element={<Photos />} />
+            <Route path="photos/:photoId" element={<PhotoDetails />} />
             <Route path="downloads" element={<Downloads />} />
             <Route path="offline" element={<Offline />} />
             <Route path="*" element={<NotFound />} />

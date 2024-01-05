@@ -8,11 +8,19 @@ const Navbar = () => {
         <Link to="/" className="shrink-0 text-lg font-bold sm:text-2xl">
           Nexa Canvas
         </Link>
-        <nav className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm sm:text-base">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/photos">Photos</NavLink>
-          <NavLink to="/videos">Videos</NavLink>
-          <NavLink to="/downloads">Downloads</NavLink>
+        <nav className="dura flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-sm text-gray-200 sm:text-base [&>.active]:text-white">
+          <NavLink className="" to="/">
+            Home
+          </NavLink>
+          <NavLink className="" to="/photos">
+            Photos
+          </NavLink>
+          <NavLink className="" to="/videos">
+            Videos
+          </NavLink>
+          <NavLink className="" to="/downloads">
+            Downloads
+          </NavLink>
         </nav>
       </div>
     </header>
