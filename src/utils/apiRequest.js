@@ -6,6 +6,7 @@ export const fetchImages = async (query) => {
   try {
     const res = await fetch(`${baseUrl}${query}`);
     const data = await res.json();
+
     return data?.hits;
   } catch (error) {}
 };

@@ -9,20 +9,18 @@ const Photos = () => {
   const [order, setOrder] = useState("latest");
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const search = searchParams.get("s") || "";
-  const user_id = searchParams.get("user_id") || "";
+  const search = searchParams.get("s")?.trim() || "";
 
-  let queryString = `&per_page=24&min_width=300&order=${order}&safesearch=true`;
-  if (!!search) queryString += `&q=${search}`;
-  if (!!user_id) queryString += `&user_id=${user_id}`;
+  let queryString = `&per_page=24&order=${order}&safesearch=true`;
+  if (search) queryString += `&q=${search}`;
 
   const query = useQuery({
-    queryKey: ["photos", search],
+    queryKey: ["photos", search, order],
     queryFn: () => fetchImages(queryString),
   });
 
   return (
-    <main className="py-10">
+    <main className="py-10 md:py-16">
       <div className="container">
         <div className="mb-5">
           <h2 className="text-3xl font-black text-indigo-500">Photos</h2>

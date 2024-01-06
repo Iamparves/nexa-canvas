@@ -59,16 +59,13 @@ const PhotoDetails = () => {
             {!query.isLoading && !query.isError && query.data && (
               <div className="bg-white p-3 shadow-[0_1px_5px_rgba(0,0,0,0.08)] sm:p-5">
                 <div className="flex items-center justify-between pb-4">
-                  <Link
-                    to={`/photos?user_id=${photo.user_id}`}
-                    className="flex items-center gap-2 text-gray-700 duration-300 hover:text-indigo-500"
-                  >
+                  <div className="flex items-center gap-2 text-gray-700">
                     <img
                       className="h-10 w-10 rounded-full"
                       src={photo.userImageURL}
                     />
                     <p className="text-sm font-medium">{photo.user}</p>
-                  </Link>
+                  </div>
                   <button
                     onClick={handleSave}
                     disabled={
@@ -95,7 +92,7 @@ const PhotoDetails = () => {
                     {photo.tags.split(",").map((tag) => (
                       <Link
                         key={tag}
-                        to={`/photos?s=${tag}`}
+                        to={`/photos?s=${tag.trim().split(" ").join("+")}`}
                         className="rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-500 duration-300 hover:bg-indigo-500 hover:text-white"
                       >
                         {tag}
