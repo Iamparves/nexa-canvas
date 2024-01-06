@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TbPhoto, TbVideo } from "react-icons/tb";
+import OfflinePhotos from "../components/OfflinePhotos";
 
 const Button = ({ children, active, onClick }) => {
   return (
@@ -35,6 +36,7 @@ const Downloads = () => {
               <TbVideo className="text-lg" /> Videos
             </Button>
           </div>
+          <div className="mt-10">{type === "photos" && <OfflinePhotos />}</div>
         </div>
       </section>
     </main>

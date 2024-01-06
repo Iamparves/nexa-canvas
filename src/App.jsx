@@ -21,10 +21,10 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route element={<OnlineRoutes />}>
               <Route path="" index element={<Home />} />
+              <Route path="photos" element={<Photos />} />
+              <Route path="videos" element={<Videos />} />
             </Route>
-            <Route path="photos" element={<Photos />} />
             <Route path="photos/:photoId" element={<PhotoDetails />} />
-            <Route path="videos" element={<Videos />} />
             <Route path="videos/:videoId" element={<PhotoDetails />} />
             <Route path="downloads" element={<Downloads />} />
             <Route path="offline" element={<Offline />} />

@@ -20,7 +20,7 @@ const PhotoDetails = () => {
     queryFn: () => fetchImages(`&id=${photoId}`),
   });
 
-  const photo = query.data?.[0];
+  const photo = query.data?.[0] || existsOffline;
 
   const mutation = useMutation({
     mutationFn: addPhoto,
@@ -57,13 +57,14 @@ const PhotoDetails = () => {
           <div className="mx-auto max-w-5xl">
             {query.isLoading && <div>Loading...</div>}
             {query.isError && <div>Error</div>}
-            {!query.isLoading && !query.isError && query.data && (
+            {(existsOffline ||
+              (!query.isLoading && !query.isError && query.data)) && (
               <div className="bg-white p-3 shadow-[0_1px_5px_rgba(0,0,0,0.08)] sm:p-5">
                 <div className="flex items-center justify-between pb-4">
                   <div className="flex items-center gap-2 text-gray-700">
                     <img
                       className="h-10 w-10 rounded-full"
-                      src={photo.userImageURL}
+                      src={photo.userImageBlob || photo.userImageURL}
                     />
                     <p className="text-sm font-medium">{photo.user}</p>
                   </div>
@@ -86,8 +87,8 @@ const PhotoDetails = () => {
                   <LazyLoadImage
                     alt=""
                     effect="blur"
-                    src={photo.largeImageURL}
-                    placeholderSrc={photo.previewURL}
+                    src={photo.largeImageBlob || photo.largeImageURL}
+                    placeholderSrc={photo.largeImageBlob || photo.previewURL}
                     className="max-h-[800px] w-full object-contain"
                     wrapperClassName="mx-auto !block"
                   />

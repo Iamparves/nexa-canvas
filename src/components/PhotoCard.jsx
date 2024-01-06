@@ -3,18 +3,18 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
 
-const PhotoCard = ({ photo, scrollPosition }) => {
+const PhotoCard = ({ photo, scrollPosition, offline }) => {
+  const webFormatImage = offline
+    ? URL.createObjectURL(photo.largeImageBlob)
+    : null;
+
   return (
-    <Link
-      to={`/photos/${photo.id}`}
-      className="group relative bg-white"
-      key={photo.id}
-    >
+    <Link to={`/photos/${photo.id}`} className="group relative bg-white">
       <LazyLoadImage
         alt=""
         effect="blur"
-        src={photo.webformatURL}
-        placeholderSrc={photo.previewURL}
+        src={photo.webformatURL || webFormatImage}
+        placeholderSrc={photo.previewURL || webFormatImage}
         scrollPosition={scrollPosition}
         className="h-full w-full object-cover"
         wrapperClassName="w-full h-full"
