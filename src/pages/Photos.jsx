@@ -12,7 +12,7 @@ const Photos = () => {
   const search = searchParams.get("s") || "";
   const user_id = searchParams.get("user_id") || "";
 
-  let queryString = `&per_page=24&min_width=300&order=${order}`;
+  let queryString = `&per_page=24&min_width=300&order=${order}&safesearch=true`;
   if (!!search) queryString += `&q=${search}`;
   if (!!user_id) queryString += `&user_id=${user_id}`;
 

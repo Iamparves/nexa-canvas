@@ -1,11 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useLiveQuery } from "dexie-react-hooks";
 import React from "react";
+import toast from "react-hot-toast";
 import { MdOutlineSaveAlt } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import { fetchImages } from "../utils/apiRequest";
+import { photos } from "../utils/db";
+import { addPhoto } from "../utils/localDbRequests";
 
 const PhotoDetails = () => {
   const { photoId } = useParams();
+  const existsOffline = useLiveQuery(
+    async () => await photos.get({ id: +photoId }),
+  );
 
   const query = useQuery({
     queryKey: ["photo", photoId],
@@ -13,6 +20,34 @@ const PhotoDetails = () => {
   });
 
   const photo = query.data?.[0];
+
+  const mutation = useMutation({
+    mutationFn: addPhoto,
+  });
+
+  const handleSave = async () => {
+    if (!photo) return;
+
+    const photoData = {
+      id: photo.id,
+      user: photo.user,
+      views: photo.views,
+      userImageURL: photo.userImageURL,
+      user_id: photo.user_id,
+      largeImageURL: photo.largeImageURL,
+      tags: photo.tags,
+      downloads: photo.downloads,
+    };
+
+    mutation.mutate(photoData, {
+      onSuccess: () => {
+        toast.success("Photo saved successfully");
+      },
+      onError: (error) => {
+        toast.error("Error saving photo");
+      },
+    });
+  };
 
   return (
     <main>
@@ -34,8 +69,19 @@ const PhotoDetails = () => {
                     />
                     <p className="text-sm font-medium">{photo.user}</p>
                   </Link>
-                  <button className="flex items-center gap-2 rounded-full border-2 border-indigo-500 bg-indigo-500 px-4 py-2 text-sm font-medium uppercase text-white duration-300 hover:bg-white hover:text-indigo-500">
-                    <MdOutlineSaveAlt className="text-lg" /> Save
+                  <button
+                    onClick={handleSave}
+                    disabled={
+                      existsOffline || query.isLoading || mutation.isPending
+                    }
+                    className="flex items-center gap-2 rounded-full border-2 border-indigo-500 bg-indigo-500 px-4 py-2 text-sm font-medium uppercase text-white duration-300 hover:bg-white hover:text-indigo-500 disabled:pointer-events-none disabled:opacity-60"
+                  >
+                    <MdOutlineSaveAlt className="text-lg" />
+                    {existsOffline
+                      ? "Saved"
+                      : mutation.isPending
+                        ? "Saving..."
+                        : "Save"}
                   </button>
                 </div>
                 <div className="bg-gray-50">
