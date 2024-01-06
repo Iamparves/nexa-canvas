@@ -3,6 +3,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import React from "react";
 import toast from "react-hot-toast";
 import { MdOutlineSaveAlt } from "react-icons/md";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useParams } from "react-router-dom";
 import { fetchImages } from "../utils/apiRequest";
 import { photos } from "../utils/db";
@@ -82,9 +83,13 @@ const PhotoDetails = () => {
                   </button>
                 </div>
                 <div className="bg-gray-50">
-                  <img
-                    className="max-h-[800px] w-full object-contain"
+                  <LazyLoadImage
+                    alt=""
+                    effect="blur"
                     src={photo.largeImageURL}
+                    placeholderSrc={photo.previewURL}
+                    className="max-h-[800px] w-full object-contain"
+                    wrapperClassName="mx-auto !block"
                   />
                 </div>
                 <div className="flex flex-col items-center justify-between gap-3 pt-4 sm:flex-row">

@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
+import { trackWindowScroll } from "react-lazy-load-image-component";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useSearchParams } from "react-router-dom";
 import PhotoCard from "../components/PhotoCard";
 import { fetchImages } from "../utils/apiRequest";
 
-const Photos = () => {
+const Photos = ({ scrollPosition }) => {
   const [order, setOrder] = useState("latest");
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -33,7 +34,11 @@ const Photos = () => {
           >
             <Masonry gutter="20px">
               {query.data?.map((photo) => (
-                <PhotoCard photo={photo} key={photo.id} />
+                <PhotoCard
+                  scrollPosition={scrollPosition}
+                  photo={photo}
+                  key={photo.id}
+                />
               ))}
             </Masonry>
           </ResponsiveMasonry>
@@ -48,4 +53,4 @@ const Photos = () => {
   );
 };
 
-export default Photos;
+export default trackWindowScroll(Photos);
