@@ -3,7 +3,9 @@ import React, { useEffect } from "react";
 import { trackWindowScroll } from "react-lazy-load-image-component";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useSearchParams } from "react-router-dom";
+import Error from "../components/Error";
 import Filters from "../components/Filters";
+import Loader from "../components/Loader";
 import Pagination from "../components/Pagination";
 import PhotoCard from "../components/PhotoCard";
 import { fetchImages } from "../utils/apiRequest";
@@ -46,8 +48,15 @@ const Photos = ({ scrollPosition }) => {
           <Filters />
         </div>
         <div className="mb-7 sm:mb-10">
-          {query.isLoading && <div>Loading...</div>}
-          {query.isError && <div>Error</div>}
+          {query.isLoading && (
+            <div className="py-16 sm:py-20">
+              <Loader />
+              <p className="mt-3 text-center text-lg text-gray-400">
+                Photos Loading...
+              </p>
+            </div>
+          )}
+          {query.isError && <Error />}
           {!query.isLoading && !query.isError && query.data && (
             <ResponsiveMasonry
               columnsCountBreakPoints={{ 300: 1, 500: 2, 768: 3, 1280: 4 }}
@@ -64,7 +73,7 @@ const Photos = ({ scrollPosition }) => {
             </ResponsiveMasonry>
           )}
           {!query.isLoading && !query.isError && query.data?.length === 0 && (
-            <div className="rounded-md border py-20 text-center text-lg text-gray-500">
+            <div className="rounded-md border py-16 text-center text-lg text-gray-500 sm:py-20">
               No photos found
             </div>
           )}

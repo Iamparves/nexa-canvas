@@ -1,10 +1,13 @@
 import React from "react";
 import { GrSearch } from "react-icons/gr";
-import { RxReset } from "react-icons/rx";
+import { VscDebugRestart } from "react-icons/vsc";
 import { useSearchParams } from "react-router-dom";
 
 const Filters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const search = searchParams.get("s")?.trim() || "";
+  const order = searchParams.get("order") || "latest";
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -51,10 +54,11 @@ const Filters = () => {
           type="text"
           name="search"
           placeholder="Search for photos"
+          defaultValue={search}
         />
         <button
           type="submit"
-          className="bg-gray-50 px-2.5 text-sm duration-300 hover:bg-indigo-500 hover:text-white sm:px-3 sm:text-base"
+          className="bg-gray-50 px-2.5 text-sm duration-300 hover:bg-gray-100 sm:px-3 sm:text-base"
         >
           <GrSearch />
         </button>
@@ -62,6 +66,7 @@ const Filters = () => {
       <select
         onChange={handleOrder}
         className="cursor-pointer border border-gray-100 px-2 text-sm outline-none sm:text-base"
+        value={order}
       >
         <option value="latest">Latest</option>
         <option value="popular">Popular</option>
@@ -70,7 +75,7 @@ const Filters = () => {
         onClick={handleResest}
         className="ml-auto flex items-center gap-2 self-center rounded-md bg-gray-100 p-2 text-lg text-[#1d1d1d] duration-300 hover:bg-red-400 hover:text-white"
       >
-        <RxReset />
+        <VscDebugRestart />
       </button>
     </div>
   );
