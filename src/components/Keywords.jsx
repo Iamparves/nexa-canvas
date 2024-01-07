@@ -50,7 +50,7 @@ const Keywords = () => {
               addictive, and they won't stick to your teeth!
             </p>
           </div>
-          <div className="flex flex-wrap gap-x-1.5 gap-y-2">
+          <div className="flex flex-wrap justify-center gap-x-1.5 gap-y-2">
             {keywords.map((keyword) => (
               <Link
                 className="rounded-full border-2 border-indigo-400 bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-500 duration-300 hover:bg-indigo-400 hover:text-white"

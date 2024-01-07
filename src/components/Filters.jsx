@@ -3,7 +3,7 @@ import { GrSearch } from "react-icons/gr";
 import { VscDebugRestart } from "react-icons/vsc";
 import { useSearchParams } from "react-router-dom";
 
-const Filters = () => {
+const Filters = ({ type = "photos" }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const search = searchParams.get("s")?.trim() || "";
@@ -53,7 +53,7 @@ const Filters = () => {
           className="w-full px-3 py-2.5 text-sm outline-none sm:text-base"
           type="text"
           name="search"
-          placeholder="Search for photos"
+          placeholder={`Search for ${type}`}
           defaultValue={search}
         />
         <button
