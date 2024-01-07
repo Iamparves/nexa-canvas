@@ -1,5 +1,6 @@
 import React from "react";
 import { GrSearch } from "react-icons/gr";
+import { RxReset } from "react-icons/rx";
 import { useSearchParams } from "react-router-dom";
 
 const Filters = () => {
@@ -29,32 +30,48 @@ const Filters = () => {
     });
   };
 
+  const handleResest = () => {
+    setSearchParams((prev) => {
+      prev.delete("s");
+      prev.delete("order");
+      prev.delete("page");
+
+      return prev;
+    });
+  };
+
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-2 sm:gap-3">
       <form
         onSubmit={handleSearch}
         className="flex border border-gray-100 outline-none"
       >
         <input
-          className="px-3 py-2.5 text-base outline-none"
+          className="w-full px-3 py-2.5 text-sm outline-none sm:text-base"
           type="text"
           name="search"
           placeholder="Search for photos"
         />
         <button
           type="submit"
-          className="bg-gray-50 px-3 duration-300 hover:bg-indigo-500 hover:text-white"
+          className="bg-gray-50 px-2.5 text-sm duration-300 hover:bg-indigo-500 hover:text-white sm:px-3 sm:text-base"
         >
           <GrSearch />
         </button>
       </form>
       <select
         onChange={handleOrder}
-        className="cursor-pointer border border-gray-100 px-2 outline-none"
+        className="cursor-pointer border border-gray-100 px-2 text-sm outline-none sm:text-base"
       >
         <option value="latest">Latest</option>
         <option value="popular">Popular</option>
       </select>
+      <button
+        onClick={handleResest}
+        className="ml-auto flex items-center gap-2 self-center rounded-md bg-gray-100 p-2 text-lg text-[#1d1d1d] duration-300 hover:bg-red-400 hover:text-white"
+      >
+        <RxReset />
+      </button>
     </div>
   );
 };

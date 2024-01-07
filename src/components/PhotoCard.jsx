@@ -10,7 +10,7 @@ const PhotoCard = ({ photo, scrollPosition, offline, onDelete }) => {
     : null;
 
   return (
-    <Link to={`/photos/${photo.id}`} className="group relative bg-white">
+    <Link to={`/photos/${photo.id}`} className="group relative bg-gray-50">
       <LazyLoadImage
         alt=""
         effect="opacity"
