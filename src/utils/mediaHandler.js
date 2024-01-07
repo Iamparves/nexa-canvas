@@ -1,10 +1,13 @@
-export const fileToBLob = async (url) => {
+export const fileToBlob = async (url) => {
   try {
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
 
+    const contentType =
+      response.headers.get("Content-Type") || "application/octet-stream";
+
     const blob = new Blob([arrayBuffer], {
-      type: response.headers.get("Content-Type"),
+      type: contentType,
     });
 
     return blob;

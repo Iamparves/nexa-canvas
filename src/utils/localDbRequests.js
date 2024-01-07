@@ -1,11 +1,11 @@
 import { photos, videos } from "./db";
-import { fileToBLob } from "./mediaHandler";
+import { fileToBlob } from "./mediaHandler";
 
 export const addPhoto = async (photoData) => {
   try {
     const { userImageURL, largeImageURL, ...photo } = photoData;
-    const userImageBlob = await fileToBLob(userImageURL);
-    const largeImageBlob = await fileToBLob(largeImageURL);
+    const userImageBlob = await fileToBlob(userImageURL);
+    const largeImageBlob = await fileToBlob(largeImageURL);
 
     await photos.add({
       ...photo,
@@ -25,10 +25,14 @@ export const addPhoto = async (photoData) => {
 
 export const addVideo = async (videoData) => {
   try {
+    console.log(videoData);
+
     const { userImageURL, thumbImageURL, videoURL, ...video } = videoData;
-    const userImageBlob = await fileToBLob(userImageURL);
-    const thumbImageBlob = await fileToBLob(thumbImageURL);
-    const videoBlob = await fileToBLob(videoURL);
+    const userImageBlob = await fileToBlob(userImageURL);
+    const thumbImageBlob = await fileToBlob(thumbImageURL);
+    const videoBlob = await fileToBlob(videoURL);
+
+    console.log(videoBlob);
 
     await videos.add({
       ...video,
