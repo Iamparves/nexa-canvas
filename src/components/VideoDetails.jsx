@@ -103,8 +103,16 @@ const VideoDetails = () => {
                 </div>
                 <div className="bg-gray-50">
                   <VideoPlayer
-                    videoUrl={video?.videos?.small?.url}
-                    posterUrl={`https://i.vimeocdn.com/video/${video.picture_id}_960x540.jpg`}
+                    videoUrl={
+                      isOnline
+                        ? video?.videos?.small?.url
+                        : URL.createObjectURL(video.videoBlob)
+                    }
+                    posterUrl={
+                      isOnline
+                        ? `https://i.vimeocdn.com/video/${video.picture_id}_960x540.jpg`
+                        : URL.createObjectURL(video.thumbImageBlob)
+                    }
                   />
                 </div>
                 <div className="flex flex-col items-center justify-between gap-3 pt-4 sm:flex-row">
