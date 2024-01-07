@@ -25,14 +25,16 @@ export const addPhoto = async (photoData) => {
 
 export const addVideo = async (videoData) => {
   try {
-    const { userImageURL, thumbImageURL, ...video } = videoData;
+    const { userImageURL, thumbImageURL, videoURL, ...video } = videoData;
     const userImageBlob = await fileToBLob(userImageURL);
     const thumbImageBlob = await fileToBLob(thumbImageURL);
+    const videoBlob = await fileToBLob(videoURL);
 
     await videos.add({
       ...video,
       userImageBlob,
       thumbImageBlob,
+      videoBlob,
     });
 
     return {

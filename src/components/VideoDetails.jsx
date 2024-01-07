@@ -45,6 +45,7 @@ const VideoDetails = () => {
       thumbImageURL: thumbnail,
       tags: video.tags,
       downloads: video.downloads,
+      videoURL: video.videos?.small?.url,
     };
 
     mutation.mutate(videoData, {
@@ -103,7 +104,7 @@ const VideoDetails = () => {
                 </div>
                 <div className="bg-gray-50">
                   <VideoPlayer
-                    videoUrl={video?.videos?.tiny?.url}
+                    videoUrl={video?.videos?.small?.url}
                     posterUrl={`https://i.vimeocdn.com/video/${video.picture_id}_960x540.jpg`}
                   />
                 </div>
