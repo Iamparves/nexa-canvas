@@ -67,7 +67,7 @@ const PhotoDetails = () => {
                 </p>
               </div>
             )}
-            {!query.isError && <Error />}
+            {query.isError && <Error />}
             {((!isOnline && !!existsOffline) ||
               (!query.isLoading && !query.isError && !!query.data)) && (
               <div>
