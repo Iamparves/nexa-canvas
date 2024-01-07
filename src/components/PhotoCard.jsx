@@ -13,12 +13,17 @@ const PhotoCard = ({ photo, scrollPosition, offline, onDelete }) => {
     <Link to={`/photos/${photo.id}`} className="group relative bg-white">
       <LazyLoadImage
         alt=""
-        effect="blur"
+        effect="opacity"
         src={photo.webformatURL || webFormatImage}
         placeholderSrc={photo.previewURL || webFormatImage}
         scrollPosition={scrollPosition}
         className="h-full w-full object-cover"
-        wrapperClassName="w-full h-full"
+        wrapperClassName="w-full h-full !block opacity-10 [&.lazy-load-image-loaded]:opacity-100 transition-opacity duration-500 ease-in-out"
+        style={{
+          aspectRatio: !offline
+            ? `${photo.webformatWidth}/${photo.webformatHeight}`
+            : null,
+        }}
       />
       {offline && (
         <div className="absolute right-2 top-2 z-10">

@@ -7,6 +7,14 @@ export const fetchImages = async (query) => {
     const res = await fetch(`${baseUrl}${query}`);
     const data = await res.json();
 
-    return data?.hits;
+    const photos = data?.hits;
+    const total = data?.totalHits;
+    const totalPages = Math.ceil(total / 24);
+
+    return {
+      photos,
+      total,
+      totalPages,
+    };
   } catch (error) {}
 };

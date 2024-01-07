@@ -18,7 +18,9 @@ const OfflinePhotos = () => {
 
   return (
     <div>
-      <ResponsiveMasonry columnsCountBreakPoints={{ 300: 1, 500: 2, 768: 3 }}>
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{ 300: 1, 500: 2, 768: 3, 1280: 4 }}
+      >
         <Masonry gutter="20px">
           {allPhotos?.map((photo) => (
             <PhotoCard

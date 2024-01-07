@@ -22,7 +22,7 @@ const PhotoDetails = () => {
     enabled: isOnline,
   });
 
-  const photo = (isOnline ? query.data?.[0] : existsOffline) || {};
+  const photo = (isOnline ? query.data?.photos?.[0] : existsOffline) || {};
 
   const mutation = useMutation({
     mutationFn: addPhoto,
@@ -109,7 +109,7 @@ const PhotoDetails = () => {
                 </div>
                 <div className="flex flex-col items-center justify-between gap-3 pt-4 sm:flex-row">
                   <div className="flex flex-wrap gap-2">
-                    {photo.tags.split(",").map((tag) => (
+                    {photo.tags?.split(",").map((tag) => (
                       <Link
                         key={tag}
                         to={`/photos?s=${tag.trim().split(" ").join("+")}`}
