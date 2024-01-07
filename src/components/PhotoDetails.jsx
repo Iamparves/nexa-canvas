@@ -104,7 +104,7 @@ const PhotoDetails = () => {
                         : URL.createObjectURL(photo.largeImageBlob)
                     }
                     className="max-h-[800px] w-full object-contain"
-                    wrapperClassName="mx-auto !block"
+                    wrapperClassName="mx-auto !blur-0 !block opacity-0 [&.lazy-load-image-loaded]:opacity-100 transition-opacity duration-300 ease-in-out"
                   />
                 </div>
                 <div className="flex flex-col items-center justify-between gap-3 pt-4 sm:flex-row">
