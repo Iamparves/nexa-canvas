@@ -10,4 +10,4 @@ db.version(2).stores({
 });
 
 export default db;
-export const { photos } = db;
+export const { photos, videos } = db;

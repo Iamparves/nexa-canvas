@@ -5,6 +5,7 @@ import "./App.css";
 import Layout from "./components/Layout";
 import OnlineRoutes from "./components/OnlineRoutes";
 import PhotoDetails from "./components/PhotoDetails";
+import VideoDetails from "./components/VideoDetails";
 import Downloads from "./pages/Downloads";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -25,7 +26,7 @@ const App = () => {
               <Route path="videos" element={<Videos />} />
             </Route>
             <Route path="photos/:photoId" element={<PhotoDetails />} />
-            <Route path="videos/:videoId" element={<PhotoDetails />} />
+            <Route path="videos/:videoId" element={<VideoDetails />} />
             <Route path="downloads" element={<Downloads />} />
             <Route path="offline" element={<Offline />} />
             <Route path="*" element={<NotFound />} />

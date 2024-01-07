@@ -59,7 +59,7 @@ const Videos = ({ scrollPosition }) => {
           {query.isError && <Error />}
           {!query.isLoading && !query.isError && query.data && (
             <ResponsiveMasonry
-              columnsCountBreakPoints={{ 300: 1, 500: 2, 768: 3, 1280: 4 }}
+              columnsCountBreakPoints={{ 300: 1, 580: 2, 768: 3, 1280: 4 }}
             >
               <Masonry gutter="20px">
                 {videos.map((video) => (
