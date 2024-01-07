@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { GrSearch } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +11,13 @@ const Hero = () => {
   const handleSearch = (e) => {
     e.preventDefault();
 
-    if (search === "") return;
+    if (!navigator.onLine) {
+      return toast.error(
+        "You are offline. Please check your internet connection",
+      );
+    }
+
+    if (search.trim() === "") return;
 
     navigate(`/${type}?s=${search}`);
   };

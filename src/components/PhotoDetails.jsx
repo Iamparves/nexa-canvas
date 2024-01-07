@@ -11,6 +11,7 @@ import { addPhoto } from "../utils/localDbRequests";
 
 const PhotoDetails = () => {
   const { photoId } = useParams();
+  const isOnline = navigator.onLine;
   const existsOffline = useLiveQuery(
     async () => await photos.get({ id: +photoId }),
   );
@@ -18,9 +19,10 @@ const PhotoDetails = () => {
   const query = useQuery({
     queryKey: ["photo", photoId],
     queryFn: () => fetchImages(`&id=${photoId}`),
+    enabled: isOnline,
   });
 
-  const photo = query.data?.[0] || existsOffline;
+  const photo = (isOnline ? query.data?.[0] : existsOffline) || {};
 
   const mutation = useMutation({
     mutationFn: addPhoto,
@@ -57,14 +59,18 @@ const PhotoDetails = () => {
           <div className="mx-auto max-w-5xl">
             {query.isLoading && <div>Loading...</div>}
             {query.isError && <div>Error</div>}
-            {(existsOffline ||
-              (!query.isLoading && !query.isError && query.data)) && (
+            {((!isOnline && !!existsOffline) ||
+              (!query.isLoading && !query.isError && !!query.data)) && (
               <div className="bg-white p-3 shadow-[0_1px_5px_rgba(0,0,0,0.08)] sm:p-5">
                 <div className="flex items-center justify-between pb-4">
                   <div className="flex items-center gap-2 text-gray-700">
                     <img
                       className="h-10 w-10 rounded-full"
-                      src={photo.userImageBlob || photo.userImageURL}
+                      src={
+                        isOnline
+                          ? photo.userImageURL
+                          : URL.createObjectURL(photo.userImageBlob)
+                      }
                     />
                     <p className="text-sm font-medium">{photo.user}</p>
                   </div>
@@ -87,8 +93,16 @@ const PhotoDetails = () => {
                   <LazyLoadImage
                     alt=""
                     effect="blur"
-                    src={photo.largeImageBlob || photo.largeImageURL}
-                    placeholderSrc={photo.largeImageBlob || photo.previewURL}
+                    src={
+                      isOnline
+                        ? photo.largeImageURL
+                        : URL.createObjectURL(photo.largeImageBlob)
+                    }
+                    placeholderSrc={
+                      isOnline
+                        ? photo.previewURL
+                        : URL.createObjectURL(photo.largeImageBlob)
+                    }
                     className="max-h-[800px] w-full object-contain"
                     wrapperClassName="mx-auto !block"
                   />
@@ -99,7 +113,8 @@ const PhotoDetails = () => {
                       <Link
                         key={tag}
                         to={`/photos?s=${tag.trim().split(" ").join("+")}`}
-                        className="rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-500 duration-300 hover:bg-indigo-500 hover:text-white"
+                        className="rounded-full bg-indigo-100 px-3 py-1 text-sm font-medium text-indigo-500 duration-300 hover:bg-indigo-500 hover:text-white aria-disabled:pointer-events-none aria-disabled:opacity-70"
+                        aria-disabled={!isOnline}
                       >
                         {tag}
                       </Link>

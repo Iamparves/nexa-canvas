@@ -27,6 +27,14 @@ const manifestForPlugIn = {
   workbox: {
     cleanupOutdatedCaches: true,
     skipWaiting: true,
+    clientsClaim: true,
+    runtimeCaching: [
+      {
+        urlPattern: new RegExp("^https://pixabay.com/api/"),
+        handler: "NetworkOnly",
+      },
+    ],
+    globPatterns: ["**/*.{js,css,html,png,jpg,svg}"],
   },
 };
 
