@@ -41,8 +41,8 @@ const Photos = ({ scrollPosition }) => {
               Photos
             </h2>
             <p className="text-[15px] text-gray-400">
-              Showing {skipped + 1} - {skipped + photos.length} of{" "}
-              {query.data?.total || 0} results
+              Showing {photos.length > 0 ? skipped + 1 : 0} -{" "}
+              {skipped + photos.length} of {query.data?.total || 0} results
             </p>
           </div>
           <Filters />

@@ -41,8 +41,8 @@ const Videos = ({ scrollPosition }) => {
               Videos
             </h2>
             <p className="text-[15px] text-gray-400">
-              Showing {skipped + 1} - {skipped + videos.length} of{" "}
-              {query.data?.total || 0} results
+              Showing {videos.length > 0 ? skipped + 1 : 0} -{" "}
+              {skipped + videos.length} of {query.data?.total || 0} results
             </p>
           </div>
           <Filters type="videos" />

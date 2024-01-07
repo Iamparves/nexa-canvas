@@ -31,7 +31,14 @@ const manifestForPlugIn = {
     runtimeCaching: [
       {
         urlPattern: new RegExp("^https://pixabay.com/api/"),
-        handler: "NetworkOnly",
+        handler: "NetworkFirst",
+        options: {
+          cacheName: "pixabay-api",
+          expiration: {
+            maxEntries: 100,
+            maxAgeSeconds: 60 * 2,
+          },
+        },
       },
     ],
     globPatterns: ["**/*.{js,css,html,png,jpg,svg}"],

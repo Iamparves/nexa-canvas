@@ -6,11 +6,10 @@ import { Link } from "react-router-dom";
 
 const VideoCard = ({ video, scrollPosition, offline, onDelete }) => {
   const thumbPreview = `https://i.vimeocdn.com/video/${video.picture_id}_100x75.jpg`;
-  const thumbnail = `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`;
 
-  const webFormatImage = offline
+  const thumbnail = offline
     ? URL.createObjectURL(video.thumbImageBlob)
-    : null;
+    : `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`;
 
   return (
     <Link to={`/videos/${video.id}`} className="group relative bg-gray-50">
@@ -18,7 +17,7 @@ const VideoCard = ({ video, scrollPosition, offline, onDelete }) => {
         alt=""
         effect="opacity"
         src={thumbnail}
-        placeholderSrc={thumbPreview}
+        placeholderSrc={offline ? thumbnail : thumbPreview}
         scrollPosition={scrollPosition}
         className="h-full w-full object-cover"
         wrapperClassName="w-full aspect-[16/9] !block opacity-10 [&.lazy-load-image-loaded]:opacity-100 transition-opacity duration-500 ease-in-out"

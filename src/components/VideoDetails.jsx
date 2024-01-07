@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import "@vidstack/react/player/styles/base.css";
 import { useLiveQuery } from "dexie-react-hooks";
 import React from "react";
 import toast from "react-hot-toast";

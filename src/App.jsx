@@ -1,8 +1,10 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/Layout";
+import OfflinePhotos from "./components/OfflinePhotos";
+import OfflineVideos from "./components/OfflineVideos";
 import OnlineRoutes from "./components/OnlineRoutes";
 import PhotoDetails from "./components/PhotoDetails";
 import VideoDetails from "./components/VideoDetails";
@@ -27,7 +29,11 @@ const App = () => {
             </Route>
             <Route path="photos/:photoId" element={<PhotoDetails />} />
             <Route path="videos/:videoId" element={<VideoDetails />} />
-            <Route path="downloads" element={<Downloads />} />
+            <Route path="downloads" element={<Downloads />}>
+              <Route path="" element={<Navigate to="photos" />} />
+              <Route path="photos" element={<OfflinePhotos />} />
+              <Route path="videos" element={<OfflineVideos />} />
+            </Route>
             <Route path="offline" element={<Offline />} />
             <Route path="*" element={<NotFound />} />
           </Route>
