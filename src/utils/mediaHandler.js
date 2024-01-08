@@ -2,10 +2,6 @@ export const photoToBlob = async (url) => {
   try {
     const response = await fetch(url);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch photo: ${response.statusText}`);
-    }
-
     const arrayBuffer = await response.arrayBuffer();
 
     const contentType =
@@ -25,22 +21,22 @@ export const photoToBlob = async (url) => {
 export const videoToBlob = async (serverlessUrl) => {
   try {
     const response = await fetch(serverlessUrl);
+    const { status, message, video } = await response.json();
 
-    console.log("Response from videoToBlob:", response);
+    console.log(message, video);
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch video data: ${response.statusText}`);
+    if (status !== "success" || !video) {
+      throw new Error("Failed to fetch video");
     }
 
-    const videoData = await response.text();
+    const videoBlob = new Blob([new Uint8Array(video)], { type: "video/mp4" });
 
-    const videoBlob = new Blob([videoData], { type: "video/mp4" });
-    console.log("videoBlob:", videoBlob);
+    console.log(videoBlob);
 
     return videoBlob;
   } catch (error) {
     console.error(error);
-    throw new Error("Failed to convert video to blob");
+    throw new Error("Failed to fetch video");
   }
 };
 

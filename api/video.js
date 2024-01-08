@@ -6,20 +6,19 @@ export default async (req, res) => {
 
   try {
     const response = await fetch(req.query.url + "&download=1");
+    const arrayBuffer = await response.arrayBuffer();
+    const videoUint8Array = new Uint8Array(arrayBuffer);
 
-    console.log("Response from video.js:", response);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch video: ${response.statusText}`);
-    }
-
-    const body = await response.text();
-
-    console.log("Body from video.js:", body);
-
-    res.status(200).end(JSON.stringify(body));
+    res.status(200).send({
+      status: "success",
+      video: videoUint8Array,
+    });
   } catch (error) {
     console.log(error);
-    res.status(500).end("Internal Server Error");
+    res.status(500).send({
+      status: "error",
+      error,
+      message: "Internal Server Error",
+    });
   }
 };
