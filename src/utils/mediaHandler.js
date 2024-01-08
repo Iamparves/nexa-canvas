@@ -29,7 +29,13 @@ export const videoToBlob = async (serverlessFunctionUrl) => {
       throw new Error(`Failed to fetch video: ${response.statusText}`);
     }
 
-    return response.blob();
+    const arrayBuffer = await response.arrayBuffer();
+
+    const contentType = response.headers.get("Content-Type") || "video/mp4";
+
+    const blob = new Blob([arrayBuffer], { type: contentType });
+
+    return blob;
   } catch (error) {
     console.log(error);
   }
