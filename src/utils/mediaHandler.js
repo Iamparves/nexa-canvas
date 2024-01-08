@@ -25,8 +25,13 @@ export const videoToBlob = async (url) => {
   try {
     const response = await fetch(`${url}&download=1`, {
       method: "GET",
-      mode: "no-cors",
+      headers: {
+        "Allow-Access-Control-Origin": "*",
+        "Content-Type": "video/mp4",
+      },
     });
+
+    console.log(response);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch video: ${response.statusText}`);
@@ -41,7 +46,7 @@ export const videoToBlob = async (url) => {
       type: contentType,
     });
 
-    console.log(response, arrayBuffer, blob);
+    console.log(arrayBuffer, blob);
 
     return blob;
   } catch (error) {
