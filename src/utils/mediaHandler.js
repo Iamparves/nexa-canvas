@@ -1,9 +1,10 @@
-export const fileToBlob = async (url) => {
+export const fileToBlob = async (url, type = "image") => {
   try {
+    const options = type === "video" ? { mode: "no-cors" } : {};
+
     const response = await fetch(url, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
+      method: "GET",
+      ...options,
     });
     const arrayBuffer = await response.arrayBuffer();
 

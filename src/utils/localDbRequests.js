@@ -28,7 +28,7 @@ export const addVideo = async (videoData) => {
     const { userImageURL, thumbImageURL, videoURL, ...video } = videoData;
     const userImageBlob = await fileToBlob(userImageURL);
     const thumbImageBlob = await fileToBlob(thumbImageURL);
-    const videoBlob = await fileToBlob(videoURL);
+    const videoBlob = await fileToBlob(videoURL, "video");
 
     await videos.add({
       ...video,
