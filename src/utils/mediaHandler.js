@@ -21,6 +21,20 @@ export const photoToBlob = async (url) => {
   }
 };
 
+export const videoToBlob = async (serverlessFunctionUrl) => {
+  try {
+    const response = await fetch(serverlessFunctionUrl);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch video: ${response.statusText}`);
+    }
+
+    return response.blob();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // export const videoToBlob = async (url) => {
 //   try {
 //     const response = await fetch(url + "&download=1");
