@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useLiveQuery } from "dexie-react-hooks";
 import React from "react";
 import toast from "react-hot-toast";
-import { MdOutlineSaveAlt } from "react-icons/md";
+import { MdDeleteForever, MdOutlineSaveAlt } from "react-icons/md";
 import { Link, useParams } from "react-router-dom";
 import { fetchVideos } from "../utils/apiRequest";
 import { videos } from "../utils/db";
@@ -57,6 +57,17 @@ const VideoDetails = () => {
     });
   };
 
+  const handleDelete = async () => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this photo?",
+    );
+    if (!confirm) return;
+
+    const toastId = toast.loading("Deleting video...");
+    await videos.delete(+videoId);
+    toast.success("Video deleted successfully", { id: toastId });
+  };
+
   return (
     <main>
       <section className="py-10 md:py-16">
@@ -87,18 +98,24 @@ const VideoDetails = () => {
                     <p className="text-sm font-medium">{video.user}</p>
                   </div>
                   <button
-                    onClick={handleSave}
-                    disabled={
-                      existsOffline || query.isLoading || mutation.isPending
-                    }
-                    className="flex items-center gap-2 rounded-full border-2 border-indigo-500 bg-indigo-500 px-4 py-2 text-sm font-medium uppercase text-white duration-300 hover:bg-white hover:text-indigo-500 disabled:pointer-events-none disabled:opacity-60"
+                    onClick={existsOffline ? handleDelete : handleSave}
+                    disabled={query.isLoading || mutation.isPending}
+                    className={`flex items-center gap-1.5 rounded-full border-2 border-indigo-500 bg-indigo-500 px-3 py-2 text-sm font-medium uppercase text-white duration-300 hover:bg-white hover:text-indigo-500 disabled:pointer-events-none disabled:opacity-60 [&.offline]:border-red-500 [&.offline]:bg-red-500 [&.offline]:hover:bg-white [&.offline]:hover:text-red-500 ${
+                      existsOffline ? "offline" : ""
+                    }`}
                   >
-                    <MdOutlineSaveAlt className="text-lg" />
-                    {existsOffline
-                      ? "Saved"
-                      : mutation.isPending
-                        ? "Saving..."
-                        : "Save"}
+                    {existsOffline && (
+                      <>
+                        <MdDeleteForever className="text-lg" />
+                        Delete
+                      </>
+                    )}
+                    {!existsOffline && (
+                      <>
+                        <MdOutlineSaveAlt className="text-lg" />
+                        {mutation.isPending ? "Saving..." : "Save"}
+                      </>
+                    )}
                   </button>
                 </div>
                 <div className="bg-gray-50">
