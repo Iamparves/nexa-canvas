@@ -11,6 +11,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.17.1",
     "@tanstack/react-query-devtools": "^5.17.1",
+    "axios": "^1.6.5",
     "dexie": "^3.2.4",
     "dexie-react-hooks": "^1.1.7",
     "prop-types": "^15.8.1",
