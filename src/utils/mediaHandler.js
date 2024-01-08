@@ -21,27 +21,26 @@ export const photoToBlob = async (url) => {
   }
 };
 
-export const videoToBlob = async (serverlessFunctionUrl) => {
+// mediaHandler.js
+export const videoToBlob = async (serverlessUrl) => {
   try {
-    const response = await fetch(serverlessFunctionUrl);
+    const response = await fetch(serverlessUrl);
 
-    console.log(response);
-
-    return;
+    console.log("Response from videoToBlob:", response);
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch video: ${response.statusText}`);
+      throw new Error(`Failed to fetch video data: ${response.statusText}`);
     }
 
-    const arrayBuffer = await response.arrayBuffer();
+    const videoData = await response.text();
 
-    const contentType = response.headers.get("Content-Type") || "video/mp4";
+    const videoBlob = new Blob([videoData], { type: "video/mp4" });
+    console.log("videoBlob:", videoBlob);
 
-    const blob = new Blob([arrayBuffer], { type: contentType });
-
-    return blob;
+    return videoBlob;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw new Error("Failed to convert video to blob");
   }
 };
 

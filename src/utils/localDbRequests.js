@@ -29,11 +29,13 @@ export const addVideo = async (videoData) => {
     const userImageBlob = await photoToBlob(userImageURL);
     const thumbImageBlob = await photoToBlob(thumbImageURL);
 
-    const videoBlob = await videoToBlob(
-      `https://nexa-canvas.vercel.app/api/video?url=${encodeURIComponent(
-        videoURL,
-      )}`,
-    );
+    const serverlessUrl = `https://nexa-canvas.vercel.app/api/video?url=${encodeURIComponent(
+      videoURL,
+    )}`;
+
+    console.log(serverlessUrl);
+
+    const videoBlob = await videoToBlob(serverlessUrl);
 
     await videos.add({
       ...video,
