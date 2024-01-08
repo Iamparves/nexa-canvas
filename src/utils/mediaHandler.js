@@ -21,25 +21,25 @@ export const photoToBlob = async (url) => {
   }
 };
 
-export const videoToBlob = async (url) => {
-  try {
-    const response = await fetch(url + "&download=1");
+// export const videoToBlob = async (url) => {
+//   try {
+//     const response = await fetch(url + "&download=1");
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch video: ${response.statusText}`);
-    }
+//     if (!response.ok) {
+//       throw new Error(`Failed to fetch video: ${response.statusText}`);
+//     }
 
-    const arrayBuffer = await response.arrayBuffer();
+//     const arrayBuffer = await response.arrayBuffer();
 
-    const contentType =
-      response.headers.get("Content-Type") || "application/octet-stream";
+//     const contentType =
+//       response.headers.get("Content-Type") || "application/octet-stream";
 
-    const blob = new Blob([arrayBuffer], {
-      type: contentType,
-    });
+//     const blob = new Blob([arrayBuffer], {
+//       type: contentType,
+//     });
 
-    return blob;
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     return blob;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
