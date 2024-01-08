@@ -4,7 +4,7 @@ export const fileToBlob = async (url, type = "image") => {
       type === "video"
         ? {
             headers: {
-              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Origin": "https://nexa-test.netlify.app/",
             },
           }
         : {};
