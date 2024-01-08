@@ -6,3 +6,23 @@
   -webkit-text-stroke: 1px #6366f1;
   text-stroke: 1px #6366f1;
 }
+
+.mobileNavBg {
+  transition-timing-function: cubic-bezier(0.5, -0.06, 0.32, 0.99);
+}
+
+.mobileNavBg:has(~ :nth-child(2).active) {
+  left: 0;
+}
+
+.mobileNavBg:has(~ :nth-child(3).active) {
+  left: 25%;
+}
+
+.mobileNavBg:has(~ :nth-child(4).active) {
+  left: 50%;
+}
+
+.mobileNavBg:has(~ :nth-child(5).active) {
+  left: 75%;
+}

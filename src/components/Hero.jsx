@@ -27,7 +27,7 @@ const Hero = () => {
       <div className="bg-black/70 py-16 sm:py-20 lg:py-24 xl:py-36">
         <div className="container">
           <div className="mx-auto max-w-[600px]">
-            <h1 className="mb-5 text-2xl font-bold leading-10 text-white sm:text-[32px] xl:mb-8">
+            <h1 className="mb-5 text-2xl font-bold leading-8 text-white sm:text-[32px] sm:leading-10 xl:mb-8">
               The best free stock photos, royalty free images & videos shared by
               creators.
             </h1>

@@ -21,7 +21,7 @@ const Downloads = () => {
 
   return (
     <main>
-      <section className="py-10 md:py-16">
+      <section className="pb-10 pt-8 md:py-16">
         <div className="container">
           <div className="flex items-center justify-center gap-2">
             <Button path="photos" active={route === "photos"}>

@@ -33,7 +33,7 @@ const Photos = ({ scrollPosition }) => {
   }, [queryString]);
 
   return (
-    <main className="py-10 md:py-16">
+    <main className="pb-10 pt-7 md:py-16">
       <div className="container">
         <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-center">
           <div className="flex items-center justify-between md:flex-col md:items-start">

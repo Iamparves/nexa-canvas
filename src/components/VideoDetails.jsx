@@ -70,7 +70,7 @@ const VideoDetails = () => {
 
   return (
     <main>
-      <section className="py-10 md:py-16">
+      <section className="pb-10 pt-8 md:py-16">
         <div className="container">
           <div className="mx-auto max-w-5xl bg-white p-3 shadow-[0_1px_5px_rgba(0,0,0,0.08)] sm:p-5">
             {query.isLoading && (
