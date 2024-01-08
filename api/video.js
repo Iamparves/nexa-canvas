@@ -1,4 +1,19 @@
 import { Readable } from "stream";
+import zlib from "zlib";
+
+const compressAndStream = (buffer, res) => {
+  const compressedStream = zlib.createGzip();
+  const readable = new Readable();
+
+  readable._read = () => {};
+  readable.push(buffer);
+  readable.push(null);
+
+  // Pipe the compressed stream to the response
+  readable.pipe(compressedStream).pipe(res);
+
+  res.setHeader("Content-Encoding", "gzip");
+};
 
 export default async (req, res) => {
   // Set CORS headers
@@ -14,24 +29,16 @@ export default async (req, res) => {
     }
 
     const arrayBuffer = await response.arrayBuffer();
-
     const contentType =
       response.headers.get("Content-Type") || "application/octet-stream";
 
-    const blob = new Blob([arrayBuffer], {
-      type: contentType,
-    });
+    const buffer = Buffer.from(arrayBuffer);
 
-    const buffer = Buffer.from(await blob.arrayBuffer());
-
-    const readable = new Readable();
-    readable._read = () => {};
-    readable.push(buffer);
-    readable.push(null);
+    // Compress and stream the data
+    compressAndStream(buffer, res);
 
     res.status(200);
     res.setHeader("Content-Type", contentType);
-    readable.pipe(res);
   } catch (error) {
     console.log(error);
     res.status(500).end("Internal Server Error");
