@@ -1,4 +1,4 @@
-const API_KEY = "14571957-84fd93db3fabca9fc66d4bee1";
+const API_KEY = import.meta.env.VITE_PIXABAY_API_KEY;
 
 const photoBaseUrl = `https://pixabay.com/api/?key=${API_KEY}`;
 const videoBaseUrl = `https://pixabay.com/api/videos/?key=${API_KEY}`;

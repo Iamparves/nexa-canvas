@@ -14,7 +14,25 @@ Nexa Canvas is an immersive media gallery that combines timeless visuals with se
 - [ ] React.js
 - [ ] Tailwind CSS
 - [ ] IndexedDB
+- [ ] Dexie.js
+- [ ] Vite PWA
 - [ ] Pixabay API
+
+### Project Purpose
+
+This project was created as a personal exploration and practice exercise in building Progressive Web Applications (PWAs) and utilizing IndexedDB for offline data storage.
+
+### Known Issues
+
+CORS Issue with Pixabay API for Videos
+
+Currently, there is a CORS (Cross-Origin Resource Sharing) issue when fetching videos from Pixabay, preventing their storage in IndexedDB for offline access. While images can be seamlessly downloaded and accessed offline, videos may not be available in the offline mode due to this limitation. Efforts were made to address this issue, but it remains unresolved.
+
+### Usage
+
+1. Browse the media gallery and explore the captivating visuals.
+2. Download your favorite images and videos for offline access.
+3. Visit the download list page to manage and revisit your downloaded media.
 
 ### Getting Started
 
@@ -36,9 +54,3 @@ npm install
 ```
 npm run dev
 ```
-
-### Usage
-
-1. Browse the media gallery and explore the captivating visuals.
-2. Download your favorite images and videos for offline access.
-3. Visit the download list page to manage and revisit your downloaded media.
