@@ -106,7 +106,9 @@ const VideoDetails = () => {
                     videoUrl={
                       isOnline
                         ? video?.videos?.small?.url
-                        : URL.createObjectURL(video.videoBlob)
+                        : video?.videoBlob
+                          ? URL.createObjectURL(video.videoBlob)
+                          : null
                     }
                     posterUrl={
                       isOnline

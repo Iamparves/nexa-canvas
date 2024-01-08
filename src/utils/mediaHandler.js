@@ -1,6 +1,10 @@
 export const fileToBlob = async (url) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
     const arrayBuffer = await response.arrayBuffer();
 
     const contentType =
