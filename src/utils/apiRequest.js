@@ -5,7 +5,9 @@ const videoBaseUrl = `https://pixabay.com/api/videos/?key=${API_KEY}`;
 
 export const fetchImages = async (query) => {
   try {
-    const res = await fetch(`${photoBaseUrl}${query}`);
+    const res = await fetch(`${photoBaseUrl}${query}`, {
+      cache: "no-cache",
+    });
     const data = await res.json();
 
     const photos = data?.hits;
@@ -24,7 +26,9 @@ export const fetchImages = async (query) => {
 
 export const fetchVideos = async (query) => {
   try {
-    const res = await fetch(`${videoBaseUrl}${query}`);
+    const res = await fetch(`${videoBaseUrl}${query}`, {
+      cache: "no-cache",
+    });
     const data = await res.json();
 
     const videos = data?.hits;
