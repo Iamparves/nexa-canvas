@@ -1,6 +1,11 @@
 export const imageToBlob = async (url) => {
   try {
     const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch photo: ${response.statusText}`);
+    }
+
     const arrayBuffer = await response.arrayBuffer();
 
     const contentType =
@@ -16,16 +21,11 @@ export const imageToBlob = async (url) => {
   }
 };
 
-const proxyUrl = "/.netlify/functions/proxy";
-
 export const videoToBlob = async (url) => {
   try {
-    const response = await fetch(proxyUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url }),
+    const response = await fetch(url, {
+      method: "GET",
+      mode: "no-cors",
     });
 
     if (!response.ok) {
