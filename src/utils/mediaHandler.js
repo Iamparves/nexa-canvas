@@ -2,6 +2,8 @@ export const photoToBlob = async (url) => {
   try {
     const response = await fetch(url);
 
+    if (!response.ok) throw new Error("Failed to fetch image");
+
     const arrayBuffer = await response.arrayBuffer();
 
     const contentType =
@@ -17,48 +19,24 @@ export const photoToBlob = async (url) => {
   }
 };
 
-// mediaHandler.js
-export const videoToBlob = async (serverlessUrl) => {
+// Tried to slay the CORS dragon 🐉, but it's the ultimate maze runner! 🤷‍♂️💻 #EpicFail
+export const videoToBlob = async (url) => {
   try {
-    const response = await fetch(serverlessUrl);
-    const { status, message, video } = await response.json();
+    const response = await fetch(url);
 
-    console.log(message, video);
+    if (!response.ok) throw new Error("Failed to fetch video");
 
-    if (status !== "success" || !video) {
-      throw new Error("Failed to fetch video");
-    }
+    const arrayBuffer = await response.arrayBuffer();
 
-    const videoBlob = new Blob([new Uint8Array(video)], { type: "video/mp4" });
+    const contentType =
+      response.headers.get("Content-Type") || "application/octet-stream";
 
-    console.log(videoBlob);
+    const blob = new Blob([arrayBuffer], {
+      type: contentType,
+    });
 
-    return videoBlob;
+    return blob;
   } catch (error) {
-    console.error(error);
-    throw new Error("Failed to fetch video");
+    console.log(error);
   }
 };
-
-// export const videoToBlob = async (url) => {
-//   try {
-//     const response = await fetch(url + "&download=1");
-
-//     if (!response.ok) {
-//       throw new Error(`Failed to fetch video: ${response.statusText}`);
-//     }
-
-//     const arrayBuffer = await response.arrayBuffer();
-
-//     const contentType =
-//       response.headers.get("Content-Type") || "application/octet-stream";
-
-//     const blob = new Blob([arrayBuffer], {
-//       type: contentType,
-//     });
-
-//     return blob;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };

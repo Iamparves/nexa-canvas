@@ -5,7 +5,7 @@ export default async (req, res) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   try {
-    const response = await fetch(req.query.url + "&download=1");
+    const response = await fetch(req.query.url);
     const arrayBuffer = await response.arrayBuffer();
     const videoUint8Array = new Uint8Array(arrayBuffer);
 

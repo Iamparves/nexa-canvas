@@ -31,8 +31,6 @@ export const addVideo = async (videoData) => {
 
     const serverlessUrl = `https://nexa-canvas.vercel.app/api/video?url=${videoURL}`;
 
-    console.log(serverlessUrl);
-
     const videoBlob = await videoToBlob(serverlessUrl);
 
     await videos.add({
