@@ -23,7 +23,7 @@ export const imageToBlob = async (url) => {
 
 export const videoToBlob = async (url) => {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(`${url}&download=1`, {
       method: "GET",
       mode: "no-cors",
     });
@@ -32,11 +32,18 @@ export const videoToBlob = async (url) => {
       throw new Error(`Failed to fetch video: ${response.statusText}`);
     }
 
-    const data = await response.json();
+    const arrayBuffer = await response.arrayBuffer();
 
-    console.log(data);
+    const contentType =
+      response.headers.get("Content-Type") || "application/octet-stream";
 
-    return null;
+    const blob = new Blob([arrayBuffer], {
+      type: contentType,
+    });
+
+    console.log(response, arrayBuffer, blob);
+
+    return blob;
   } catch (error) {
     console.log(error);
   }
