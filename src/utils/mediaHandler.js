@@ -1,6 +1,13 @@
 export const fileToBlob = async (url, type = "image") => {
   try {
-    const options = type === "video" ? { mode: "no-cors" } : {};
+    const options =
+      type === "video"
+        ? {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        : {};
 
     const response = await fetch(url, {
       method: "GET",
