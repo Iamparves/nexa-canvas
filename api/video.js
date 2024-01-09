@@ -7,11 +7,11 @@ export default async (req, res) => {
   try {
     const response = await fetch(req.query.url);
     const arrayBuffer = await response.arrayBuffer();
-    const videoUint8Array = new Uint8Array(arrayBuffer);
+    // const videoUint8Array = new Uint8Array(arrayBuffer);
 
     res.status(200).send({
       status: "success",
-      video: videoUint8Array,
+      video: arrayBuffer,
     });
   } catch (error) {
     console.log(error);
