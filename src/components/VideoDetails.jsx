@@ -3,8 +3,9 @@ import { useLiveQuery } from "dexie-react-hooks";
 import React from "react";
 import toast from "react-hot-toast";
 import { MdDeleteForever, MdOutlineSaveAlt } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchVideos } from "../utils/apiRequest";
+import { blobToUrl } from "../utils/blobToUrl";
 import { videos } from "../utils/db";
 import { addVideo } from "../utils/localDbRequests";
 import Error from "./Error";
@@ -14,6 +15,8 @@ import VideoPlayer from "./VideoPlayer";
 const VideoDetails = () => {
   const { videoId } = useParams();
   const isOnline = navigator.onLine;
+  const navigate = useNavigate();
+
   const existsOffline = useLiveQuery(
     async () => await videos.get({ id: +videoId }),
   );
@@ -66,6 +69,10 @@ const VideoDetails = () => {
     const toastId = toast.loading("Deleting video...");
     await videos.delete(+videoId);
     toast.success("Video deleted successfully", { id: toastId });
+
+    if (!isOnline) {
+      return navigate("/downloads/videos");
+    }
   };
 
   return (
@@ -92,7 +99,7 @@ const VideoDetails = () => {
                       src={
                         isOnline
                           ? video.userImageURL
-                          : URL.createObjectURL(video.userImageBlob)
+                          : blobToUrl(video.userImageBlob)
                       }
                     />
                     <p className="text-sm font-medium">{video.user}</p>
@@ -123,14 +130,12 @@ const VideoDetails = () => {
                     videoUrl={
                       isOnline
                         ? video?.videos?.small?.url
-                        : video?.videoBlob
-                          ? URL.createObjectURL(video.videoBlob)
-                          : null
+                        : blobToUrl(video.videoBlob)
                     }
                     posterUrl={
                       isOnline
                         ? `https://i.vimeocdn.com/video/${video.picture_id}_960x540.jpg`
-                        : URL.createObjectURL(video.thumbImageBlob)
+                        : blobToUrl(video.thumbImageBlob)
                     }
                   />
                 </div>

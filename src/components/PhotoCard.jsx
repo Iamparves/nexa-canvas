@@ -3,11 +3,10 @@ import { MdDeleteForever } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
+import { blobToUrl } from "../utils/blobToUrl";
 
 const PhotoCard = ({ photo, scrollPosition, offline, onDelete }) => {
-  const webFormatImage = offline
-    ? URL.createObjectURL(photo.largeImageBlob)
-    : null;
+  const webFormatImage = offline ? blobToUrl(photo.largeImageBlob) : null;
 
   return (
     <Link to={`/photos/${photo.id}`} className="group relative bg-gray-50">

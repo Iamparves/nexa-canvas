@@ -4,8 +4,9 @@ import React from "react";
 import toast from "react-hot-toast";
 import { MdDeleteForever, MdOutlineSaveAlt } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetchImages } from "../utils/apiRequest";
+import { blobToUrl } from "../utils/blobToUrl";
 import { photos } from "../utils/db";
 import { addPhoto } from "../utils/localDbRequests";
 import Error from "./Error";
@@ -14,6 +15,8 @@ import Loader from "./Loader";
 const PhotoDetails = () => {
   const { photoId } = useParams();
   const isOnline = navigator.onLine;
+  const navigate = useNavigate();
+
   const existsOffline = useLiveQuery(
     async () => await photos.get({ id: +photoId }),
   );
@@ -63,6 +66,10 @@ const PhotoDetails = () => {
     const toastId = toast.loading("Deleting photo...");
     await photos.delete(+photoId);
     toast.success("Photo deleted successfully", { id: toastId });
+
+    if (!isOnline) {
+      return navigate("/downloads/photos");
+    }
   };
 
   return (
@@ -89,7 +96,7 @@ const PhotoDetails = () => {
                       src={
                         isOnline
                           ? photo.userImageURL
-                          : URL.createObjectURL(photo.userImageBlob)
+                          : blobToUrl(photo.userImageBlob)
                       }
                     />
                     <p className="text-sm font-medium">{photo.user}</p>
@@ -122,12 +129,12 @@ const PhotoDetails = () => {
                     src={
                       isOnline
                         ? photo.largeImageURL
-                        : URL.createObjectURL(photo.largeImageBlob)
+                        : blobToUrl(photo.largeImageBlob)
                     }
                     placeholderSrc={
                       isOnline
                         ? photo.previewURL
-                        : URL.createObjectURL(photo.largeImageBlob)
+                        : blobToUrl(photo.largeImageBlob)
                     }
                     className="max-h-[800px] w-full object-contain"
                     wrapperClassName="mx-auto !blur-0 !block opacity-0 [&.lazy-load-image-loaded]:opacity-100 transition-opacity duration-300 ease-in-out"

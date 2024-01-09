@@ -3,12 +3,13 @@ import { MdDeleteForever, MdPlayCircleFilled } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
+import { blobToUrl } from "../utils/blobToUrl";
 
 const VideoCard = ({ video, scrollPosition, offline, onDelete }) => {
   const thumbPreview = `https://i.vimeocdn.com/video/${video.picture_id}_100x75.jpg`;
 
   const thumbnail = offline
-    ? URL.createObjectURL(video.thumbImageBlob)
+    ? blobToUrl(video.thumbImageBlob)
     : `https://i.vimeocdn.com/video/${video.picture_id}_640x360.jpg`;
 
   return (
